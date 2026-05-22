@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Voice Typing — Speech to Text
+
+Convert speech to text, instantly. A free, browser-based voice transcription tool powered by the Web Speech API. No server, no signup, no data leaves your device.
+
+## Features
+
+- **Cursor-aware insertion** — click anywhere in the text area and start speaking; your words appear exactly where the cursor is
+- **Real-time preview** — see live in-progress transcription below the text area before it commits
+- **Full editability** — type, delete, select, and paste alongside voice input; it's a normal text area with a voice superpower
+- **Copy & Clear** — one-click copy of all text to clipboard, or clear the entire text area
+- **Zero server** — everything runs in your browser via the Web Speech API; no audio is sent anywhere
+- **Free** — no credits, no subscription, no "upgrade to pro"
+
+## Browser Support
+
+| Browser | Status |
+|---|---|
+| Chrome | ✅ Supported |
+| Edge | ✅ Supported |
+| Safari | ✅ Supported |
+| Firefox | ❌ Not supported (no Web Speech API implementation) |
+
+The app gracefully detects unsupported browsers and shows a fallback message.
+
+## Built With
+
+- [Next.js](https://nextjs.org/) 16
+- [Tailwind CSS](https://tailwindcss.com/) v4
+- [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) (headings)
+- [Geist](https://vercel.com/font) (UI text)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) in Chrome, Edge, or Safari.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm i -g vercel
+vercel
+```
+
+Or connect your Git repository to [Vercel](https://vercel.com/new) for automatic deployments.
+
+## Project Structure
+
+```
+app/
+├── global.d.ts       # Web Speech API type declarations
+├── globals.css       # Tailwind imports and theme variables
+├── layout.tsx        # Root layout with font loading
+└── page.tsx          # Main speech-to-text component
+```
+
+## How It Works
+
+1. **Place your cursor** in the text area where you want text to appear
+2. **Click "Start Listening"** — the browser requests microphone permission
+3. **Speak** — speech is streamed to the `SpeechRecognition` API
+4. **Final results** are spliced into the text at the saved cursor position
+5. **Interim results** appear as a muted preview below the text area
+6. **Move the cursor anytime** — subsequent speech lands at the new position
+
+All recognition runs locally in your browser. No data leaves your device.
